@@ -126,3 +126,19 @@ correctly rendering too.
 Compile command and execute command should be wrap in a pair of parenthesis
 cause posix shell syntax.
 
+## Performance
+
+Some file will be terribly slow to compile file,
+like tex, which author use frequently.
+Maybe tow ways to improve them :
+
+- Run background  
+	Just add an ```&``` character at tail of ```silent execute``` in the filetype ```.vim``` file.
+	This make program run background
+	so we can use neovim editor when compiling.  
+	Although the compile program is still slow.
+	And the preview refreshing may slow then buffer change in seconds.
+- ramfs  
+	```mount -t ramfs``` will create a space use RAM directly.
+	This may speed up the compile program.  
+	Don't foget to free these RAM and ```unmount``` it.
