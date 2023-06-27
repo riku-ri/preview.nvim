@@ -16,7 +16,7 @@ endif
 
 if !exists('g:preview_browser')
 	let g:preview_browser = 'chromium'
-elseif !g:preview_browser
+elseif(g:preview_browser == "")
 	let g:preview_browser = 'chromium'
 endif
 
