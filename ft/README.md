@@ -128,9 +128,9 @@ cause posix shell syntax.
 
 ## Performance
 
-Some file will be terribly slow to compile file,
+Some file will be terribly slow to be compiled,
 like tex, which author use frequently.
-Maybe tow ways to improve them :
+Maybe there are tow ways to improve them :
 
 - Run background  
 	Just add an ```&``` character at tail of ```silent execute``` in the filetype ```.vim``` file.
