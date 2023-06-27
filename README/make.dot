@@ -1,0 +1,30 @@
+digraph g
+{
+	rankdir=LR;
+	node[shape="box", fontname="monospace"]
+	edge[arrowhead=vee, arrowtail=vee, fontname="monospace", fontsize=10, dir=none]
+
+	make[label="$make -f makefile.default", shape=underline, fontcolor=cornflowerblue, color=cornflowerblue]
+	makefile[label="makefile.default", shape="note"]
+	"ft/*"
+	"preview.vim"
+	"websocket.go"
+	"websocket" [shape=box3d]
+	root[label="~/.vim/preview/"]
+
+	make -> makefile
+
+	makefile       -> "websocket.go" [label="$go mod build", fontcolor=cornflowerblue, style=dashed, color=aquamarine3]
+	"websocket.go" -> websocket      [label="", color=aquamarine3, dir=forward]
+	makefile       -> websocket      [label="$install", color=aquamarine3, fontcolor=cornflowerblue, style=dashed]
+	websocket      -> root           [label="", color=aquamarine3, dir=forward]
+
+	makefile      -> "preview.vim" [label="$install", fontcolor=cornflowerblue, style=dashed, color=chocolate]
+	"preview.vim" -> root          [color=chocolate, dir=forward]
+
+	makefile      -> "ft/*" [label="$install", fontcolor=cornflowerblue, style=dashed, color=webgreen]
+	"ft/*"        -> root   [label=""color=webgreen, dir=forward]
+
+	{rank=same;"preview.vim";"websocket.go";"ft/*";}
+	{rank=same;make;makefile}
+}

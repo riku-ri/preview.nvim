@@ -1,0 +1,8 @@
+digraph g
+{
+	node[shape="box", fontname="monospace"]
+	edge[arrowhead=vee, arrowtail=vee, fontname="monospace", fontsize=10]
+	HTTPS[label="HTTP Server"]
+	HTTPC[label="HTTP Client"]
+	websocket
+}

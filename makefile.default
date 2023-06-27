@@ -1,0 +1,14 @@
+preview_root := ~/.vim/preview
+all : $(preview_root)/websocket $(preview_root)/preview.vim ft
+$(preview_root)/websocket : websocket
+	install -D -m 0755 $< -T $@
+websocket : websocket.go
+	go build -o $@
+websocket.go : go.mod
+	go mod tidy
+go.mod :
+	stat go.mod || go mod init preview.nvim/websocket
+$(preview_root)/preview.vim : preview.vim
+	install -D -m 0644 $< -T $@
+ft :
+	make -C $@ -f makefile.default

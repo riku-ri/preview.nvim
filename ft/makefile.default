@@ -1,0 +1,4 @@
+preview_root := ~/.vim/preview
+
+all :
+	install -D -m 0644 *.vim $(preview_root)/ft

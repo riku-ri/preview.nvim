@@ -1,0 +1,27 @@
+digraph g
+{
+	node[shape="box", fontname="monospace"]
+	edge[arrowhead=vee, arrowtail=vee, fontname="monospace", fontsize=10]
+	nvim
+	[
+		label= "{Your neovim buffer|
+		You are editing it\l and want browser shows the preview\l|
+		And the preview cotent should be auto changed \l when you edit the buffer\l}",
+		shape="record"
+	]
+	browser       [shape="egg"]
+	"dot.vim"     [label="~/.vim/preview/ft/dot.vim",  shape="note"]
+	websocket     [label="~/.vim/preview/websocket",   shape="box3d"]
+	"preview.vim" [label="~/.vim/preview/preview.vim", shape="note"]
+
+	nvim -> "preview.vim" [label=":source", color=cornflowerblue, fontcolor=cornflowerblue]
+
+	"preview.vim" -> websocket[label="auto run"]
+	"preview.vim" -> browser[label="auto run"]
+
+	"preview.vim" -> nvim      [label="[1]Setting", color=chocolate]
+	nvim          -> nvim      [label="change text", color=chocolate]
+	nvim          -> "dot.vim" [label="auto source", color=chocolate]
+	"dot.vim"     -> websocket [label="send the newest preview", color=chocolate]
+	websocket     -> browser   [label=" auto change", color=chocolate]
+}
