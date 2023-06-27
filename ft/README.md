@@ -57,7 +57,7 @@ Options in [```dot.vim```](dot.vim):
 - ```-t``` : Use TCP
 - ```-c``` : Close after sending
 
-**Note that close the connection after sending is necessary. Behavior without closing is undefined.**
+**The HTTP server will try to receive data until the data TCP port close.**
 
 So pipe ```nc``` is enough
 
@@ -125,6 +125,24 @@ correctly rendering too.
 
 Compile command and execute command should be wrap in a pair of parenthesis
 cause posix shell syntax.
+
+### Too much data to send
+
+Generally, Linux pipe buffer size is 64KB.
+So if the preview content to be send is overflow,
+browser will get a lost data block.
+
+In fact we can use some temporary files but not pipe to send data to data port.
+And then write a program to read the temporary files and send to data port and close it.
+
+Here the filetype ```.vim``` file should do:
+1. Save buffer to temporary file  
+	```silent execute 'w <temporary_file_name>'```  
+	Or use pipe if the size of edit buffer is less then pipe buffer.
+1. Compile file if necessary, and save to another temporary file.
+1. Call the program that read file and send to TCP port.
+	- Tell the program the port, maybe in command line argument.
+	- Tell the program whitch file to send.
 
 ## Performance
 
