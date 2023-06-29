@@ -6,7 +6,7 @@ Some example for make a specific filetype can be preview
 
 ### Create a file named filetype and with suffix ```.vim```
 
-like ```dot.vim```.
+like ```dot/preview.vim```.
 
 You can rename this file,
 just ensure the path of file can match ```g:preview_dot_vimrc```.
@@ -94,7 +94,34 @@ To synchronize buffer,
 just run ```:so dot.vim``` on every change of edit buffer.
 This is done in [```../preview.vim```](../preview.vim) 
 
-## Other situations
+## More examples
+
+Apart from [dot](dot) format,
+there are some other use cases in this directory.
+They show different situations and possible problem
+when we try to do preview in vim,
+and talk how to deal with the nuisance.
+
+
+- [```dot/```](dot/)  
+	Nothing more. Just see above.
+- [```r/```](r/)
+	A interpreted language.
+	For most interpreted language,
+	it is easy to get code from standard input and print to standard output.  
+	But here the R interpreter ```Rscript``` get data by filename
+	in command line argument.
+- [```c/```](c/)  
+	Typical compiled language.
+	Security infrastructure may not allow running binary machine code
+	from standard input.
+- [tex/](tex/)  
+	TeX compiler is slooooooooooow,
+	especaially when deal with font database.
+
+Enter their directory to get mo details.
+
+<!--
 
 ### Interpreted
 
@@ -143,6 +170,8 @@ Here the filetype ```.vim``` file should do:
 1. Call the program that read file and send to TCP port.
 	- Tell the program the port, maybe in command line argument.
 	- Tell the program whitch file to send.
+
+-->
 
 ## Performance
 
