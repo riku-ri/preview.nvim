@@ -1,4 +1,12 @@
 preview_root := ~/.vim/preview
 
-all :
-	install -D -m 0644 *.vim $(preview_root)/ft
+all : $(preview_root)/ft/dot/preview.vim $(preview_root)/ft/c/preview.vim $(preview_root)/ft/r/preview.vim $(preview_root)/ft/tex/preview.vim
+
+$(preview_root)/ft/dot/preview.vim : dot/preview.vim
+	install -m 0644 -D $< $@
+$(preview_root)/ft/c/preview.vim   : c/preview.vim
+	install -m 0644 -D $< $@
+$(preview_root)/ft/r/preview.vim   : r/preview.vim
+	install -m 0644 -D $< $@
+$(preview_root)/ft/tex/preview.vim : tex/preview.vim
+	install -m 0644 -D $< $@

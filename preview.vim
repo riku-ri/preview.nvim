@@ -9,7 +9,7 @@ if !exists('g:preview_tmp')
 endif
 
 let s:preview_ft_filename         = 'g:preview_'.&ft.'_vimrc'
-let s:preview_ft_filename_default = g:preview_root.'/ft/'.&ft.'.vim'
+let s:preview_ft_filename_default = g:preview_root.'/ft/'.&ft.'/preview.vim'
 if !exists(s:preview_ft_filename)
 	execute 'let '.s:preview_ft_filename.' = '.'"'.s:preview_ft_filename_default.'"'
 endif
@@ -21,6 +21,13 @@ elseif(g:preview_browser == "")
 endif
 
 let g:preview_websocket_program = g:preview_root.'/'.'websocket'
+
+if !exists('g:preview_timer_mode')
+	let g:preview_timer_mode = 0
+endif
+if !exists('g:preview_timer_gap')
+	let g:preview_timer_gap = 500
+endif
 "g:preview variables
 "g:preview variables
 
@@ -102,13 +109,25 @@ if g:preview_browser == "chromium" || g:preview_browser == "firefox"
 else
 	let b:preview_browserid = <SID>jobstart([g:preview_browser, s:preview_websocket_html])
 endif
+
+function! s:preview_timer_call(timer)
+	silent execute 'so '.eval('g:preview_'.&ft.'_vimrc')
+endfunction
+
 if(filereadable(eval('g:preview_'.&ft.'_vimrc')))
-	execute 'so '.eval('g:preview_'.&ft.'_vimrc')
-	execute "augroup preview".&ft.bufnr('%')
-		autocmd!
-		autocmd TextChanged,TextChangedI <buffer> silent execute 'so '.eval('g:preview_'.&ft.'_vimrc')
-		autocmd BufUnload <buffer> call <SID>preview_stop()
-	execute "augroup END"
+	if !g:preview_timer_mode
+		execute 'so '.eval('g:preview_'.&ft.'_vimrc')
+		execute "augroup preview".&ft.bufnr('%')
+			autocmd!
+			autocmd TextChanged,TextChangedI <buffer> silent execute 'so '.eval('g:preview_'.&ft.'_vimrc')
+			autocmd BufUnload <buffer> call <SID>preview_stop()
+		execute "augroup END"
+	else
+		let g:tex_compile_timer_id = timer_start(g:preview_timer_gap, 's:preview_timer_call', {'repeat': -1})
+		if(g:tex_compile_timer_id == -1)
+			echoerr "Can not run tex timer"
+		endif
+	endif
 else
 	echoerr "file `" eval('g:preview_'.&ft.'_vimrc') "` can not be read"
 	call <SID>preview_stop()

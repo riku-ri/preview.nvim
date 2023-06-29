@@ -8,7 +8,7 @@ import (
 	"os"
 	"os/signal"
 	"context"
-	"strconv"
+	//"strconv"
 	"syscall"
 
 	"golang.org/x/net/websocket"
@@ -36,18 +36,15 @@ func dataSocket(stringchan chan string, file File) {
 		//defer listener.Close() /* doing nothing */
 		const readBytes = 0x10
 		recieved := ""
-		for func (recieved *string) int {
+		for func (recieved *string) error {
 			var read [readBytes]byte
 			readed, err := conn.Read(read[:])
 			if err != nil {
 				//log.Fatal("[Server Data Read]", err)
 			}
 			*recieved += string(read[:readed])
-			return readed
-		}(&recieved) == readBytes {}
-		if err != nil {
-			log.Println("[Server]:[Websocket]:[Send]:", err)
-		}
+			return err
+		}(&recieved) == nil {}
 		stringchan <- recieved
 	}
 
@@ -148,8 +145,9 @@ func main() {
 
 	files := []File{
 		{
-			name : vimPreviewRoot + "/" + vimPid + "." + vimBufnr + "." + "pid",
-			echo : []byte(strconv.Itoa(os.Getpid())),
+			name : vimPreviewRoot + "/" + "vim" + "." + "pid",
+			//echo : []byte(strconv.Itoa(os.Getpid())),
+			echo : []byte(vimPid),
 			mode : 0644,
 		},
 		{
