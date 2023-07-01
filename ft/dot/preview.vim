@@ -1,4 +1,4 @@
-let s:dot_cmd             = "dot -Tsvg 2>&1"
+let s:dot_cmd             = "dot -Tsvg"
 let s:port_filename       = getpid().'.'.bufnr('%').'.'.'data.port'
 let s:port                = substitute(readfile(s:port_filename)[0], ":", "", "")
 let s:send_output_to_port = 'nc -tc 127.0.0.1 '.s:port
