@@ -119,7 +119,7 @@ if(filereadable(eval('g:preview_'.&ft.'_vimrc')))
 		execute 'so '.eval('g:preview_'.&ft.'_vimrc')
 		execute "augroup preview".&ft.bufnr('%')
 			autocmd!
-			autocmd TextChanged,TextChangedI <buffer> silent execute 'so '.eval('g:preview_'.&ft.'_vimrc')
+			autocmd InsertLeave,TextChanged,TextChangedI <buffer> silent execute 'so '.eval('g:preview_'.&ft.'_vimrc')
 			autocmd BufUnload <buffer> call <SID>preview_stop()
 		execute "augroup END"
 	else

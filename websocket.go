@@ -34,7 +34,7 @@ func dataSocket(stringchan chan string, file File) {
 			log.Fatal("[HTTP Server][Data Socket][Accept()]", err)
 		}
 		//defer listener.Close() /* doing nothing */
-		const readBytes = 0x10
+		const readBytes = 0x1000
 		recieved := ""
 		for func (recieved *string) error {
 			var read [readBytes]byte
@@ -158,9 +158,8 @@ func main() {
 		{
 			name : vimPreviewRoot + "/" + vimPid + "." + vimBufnr + "." + "websocket.html",
 			echo : []byte(`
-				<html><head/>
+				<html><head>
 				<script type="text/javascript">
-					const body = document.getElementsByTagName('body');
 					var websocket = null;
 					var wsuri = "ws://127.0.0.1` + addr[strings.LastIndex(addr, ":"):] + `";
 					window.onload = function () {
@@ -168,7 +167,13 @@ func main() {
 						websocket = new WebSocket(wsuri);
 						websocket.onopen = function () {};
 						websocket.onmessage = function (e) {
+							//location.assign(location.href.substr(0,location.href.indexOf('?')) + "?randomForRefresh=" + Date.now())
+							const body = document.getElementsByTagName('body');
 							body[0].innerHTML = e.data;
+							//var imgs = document.getElementsByTagName('img');
+							//imgs = Array.prototype.slice.call(imgs); /* DOM list -> DOM node array */
+							//imgs.forEach((val) => refresh(val));
+
 							//var svgs = document.getElementsByTagName('svg');
 							//svgs = Array.prototype.slice.call(svgs);
 							//svgs.forEach((val) => val.removeAttribute("viewbox"));
@@ -185,8 +190,9 @@ func main() {
 						websocket.onclose = function () {};
 						websocket.close();
 					};
-				</script>
-				</body></html>
+				</script></head>
+				<body/>
+				</html>
 			`),
 			mode : 0644,
 		},
