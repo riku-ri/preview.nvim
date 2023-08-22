@@ -1,7 +1,7 @@
-digraph g
+digraph dot
 {
-	node[shape="box", fontname="monospace"]
-	edge[arrowhead=vee, arrowtail=vee, fontname="monospace", fontsize=10]
+	node [shape="box", fontname="Source Code Pro,monospace"]
+	edge [arrowhead=vee, arrowtail=vee, fontname="monospace", fontsize=10]
 	nvim
 	[
 		label= "{Your neovim buffer|

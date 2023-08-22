@@ -10,3 +10,5 @@ $(preview_root)/ft/r/preview.vim   : r/preview.vim
 	install -m 0644 -D $< $@
 $(preview_root)/ft/plaintex/preview.vim : plaintex/*
 	install -m 0644 -D $^ ${@D}
+$(preview_root)/ft/m4/preview.vim : m4/*
+	install -m 0644 -D $^ ${@D}

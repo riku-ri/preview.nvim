@@ -1,14 +1,14 @@
 digraph g
 {
 	rankdir=LR;
-	node[shape="box", fontname="monospace"]
+	node [shape="box", fontname="Source Code Pro,monospace"]
 	edge[arrowhead=vee, arrowtail=vee, fontname="monospace", fontsize=10, dir=none]
 
 	make[label="$make -f makefile.default", shape=underline, fontcolor=cornflowerblue, color=cornflowerblue]
 	makefile[label="makefile.default", shape="note"]
-	"ft/*"
-	"preview.vim"
-	"websocket.go"
+	"ft/*" [shape=folder]
+	"preview.vim" [shape=note]
+	"websocket.go" [shape=note]
 	"websocket" [shape=box3d]
 	root[label="~/.vim/preview/"]
 
@@ -23,7 +23,7 @@ digraph g
 	"preview.vim" -> root          [color=chocolate, dir=forward]
 
 	makefile      -> "ft/*" [label="$install", fontcolor=cornflowerblue, style=dashed, color=webgreen]
-	"ft/*"        -> root   [label=""color=webgreen, dir=forward]
+	"ft/*"        -> root   [label="recursive" fontcolor=webgreen color=webgreen, dir=forward]
 
 	{rank=same;"preview.vim";"websocket.go";"ft/*";}
 	{rank=same;make;makefile}

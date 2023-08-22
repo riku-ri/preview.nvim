@@ -1,0 +1,24 @@
+digraph nvim2browser
+{
+	node [shape=record fontname="Source Code Pro,monospace"]
+	edge [arrowhead=vee arrowtail=vee]
+
+	nvim
+	[
+		label= "{Your neovim buffer|
+		You are editing it\l and want browser shows the preview\l|
+		And the preview cotent should be auto changed \l when you edit the buffer\l}",
+		shape="record"
+	]
+	misc [label="programs that parse a specific type file to what browser can render", shape=box3d]
+	browser [shape="egg"]
+	socket [shape=cylinder color=gray fontcolor=gray]
+	websocket [shape=cylinder color=gray fontcolor=gray]
+	"w !" [shape=cylinder color=gray fontcolor=gray]
+
+	nvim -> "w !"
+	"w !" -> misc [color=gray fontcolor=gray]
+	misc -> socket
+	socket -> websocket [color=gray fontcolor=gray]
+ 	websocket -> browser
+}
