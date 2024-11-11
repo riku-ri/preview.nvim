@@ -78,7 +78,8 @@ func getVimInfo() (vimPreviewRoot string, pid string, bufnr string) {
 
 func main() {
 
-	vimPreviewRoot, vimPid, vimBufnr := getVimInfo()
+	//vimPreviewRoot, vimPid, vimBufnr := getVimInfo()
+	vimPreviewRoot, vimPid, vimBufnr := os.Args[1] , os.Args[2] , os.Args[3]
 	dataPort := File{
 		name : vimPreviewRoot + "/" + vimPid + "." + vimBufnr + "." + "data.port",
 		echo : []byte("0"),
