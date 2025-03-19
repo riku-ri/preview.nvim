@@ -76,9 +76,9 @@ function! s:preview_stop()
 	endif
 endfunction
 
-let s:port_filename = g:preview_tmp.'/'.getpid().'.'.bufnr('%').'.'.'data.port'
+let s:port_filename = g:preview_tmp.'/'.getpid().'.'.'data.port'
 
-let b:preview_websocketid = <SID>jobstart([g:preview_websocket_program])
+let b:preview_websocketid = <SID>jobstart([g:preview_websocket_program , g:preview_tmp , getpid()])
 
 "TODO : check job start for vim
 if has('nvim')
@@ -92,10 +92,11 @@ endif
 "Server need vim pid to create unique file
 "Server need vim buffer id to create unique file
 "Server need '\xff' to ensure sending is finished
-echo <SID>chansend(b:preview_websocketid, g:preview_tmp."\xff") "byte has been send to HTTP server process for" "tmpdir"
-echo <SID>chansend(b:preview_websocketid, getpid()."\xff")      "byte has been send to HTTP server process for" "pid"
-echo <SID>chansend(b:preview_websocketid, bufnr('%')."\xff")    "byte has been send to HTTP server process for" "bufnr"
+"echo <SID>chansend(b:preview_websocketid, g:preview_tmp."\xff") "byte has been send to HTTP server process for" "tmpdir"
+"echo <SID>chansend(b:preview_websocketid, getpid()."\xff")      "byte has been send to HTTP server process for" "pid"
+"echo <SID>chansend(b:preview_websocketid, bufnr('%')."\xff")    "byte has been send to HTTP server process for" "bufnr"
 
+echo s:port_filename
 echo "Wait for HTTP Server startup"
 while(!filereadable(s:port_filename))
 endwhile
@@ -103,7 +104,7 @@ endwhile
 echo "HTTP Server startup has finished"
 echo "please wait for browser opening"
 
-let s:preview_websocket_html = g:preview_tmp.'/'.getpid().'.'.bufnr('%').'.'.'websocket.html'
+let s:preview_websocket_html = g:preview_tmp.'/'.getpid().'.'.'websocket.html'
 if g:preview_browser == "chromium" || g:preview_browser == "firefox"
 	let b:preview_browserid = <SID>jobstart([g:preview_browser, "--new-window", s:preview_websocket_html])
 else
@@ -117,7 +118,7 @@ endfunction
 if(filereadable(eval('g:preview_'.&ft.'_vimrc')))
 	if !g:preview_timer_mode
 		execute 'so '.eval('g:preview_'.&ft.'_vimrc')
-		execute "augroup preview".&ft.bufnr('%')
+		execute "augroup preview".&ft
 			autocmd!
 			autocmd InsertLeave,TextChanged,TextChangedI <buffer> silent execute 'so '.eval('g:preview_'.&ft.'_vimrc')
 			autocmd BufUnload <buffer> call <SID>preview_stop()

@@ -1,5 +1,5 @@
 let s:dot_cmd             = "dot -Tsvg"
-let s:port_filename       = getpid().'.'.bufnr('%').'.'.'data.port'
+let s:port_filename       = getpid().'.'.'data.port'
 let s:port                = substitute(readfile(s:port_filename)[0], ":", "", "")
 let s:send_output_to_port = 'socketsend '.s:port
 
