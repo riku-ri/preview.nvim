@@ -8,6 +8,6 @@ let s:c_wrap              = "sed '1i<pre>' | sed '$a</pre>'"
 let s:c_cmd               = s:c_compile.'|'.s:c_wrap
 let s:port_filename       = getpid().'.'.bufnr('%').'.'.'data.port'
 let s:port                = substitute(readfile(s:port_filename)[0], ":", "", "")
-let s:send_output_to_port = 'nc -tc 127.0.0.1 '.s:port
+let s:send_output_to_port = 'socketsend '.s:port
 
 silent execute 'w !'.s:c_cmd.'|'.s:send_output_to_port

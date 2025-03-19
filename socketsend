@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+
+import sys,socket
+__ = {}
+with socket.socket() as __[socket]:
+	__[socket].connect(('0.0.0.0',int(sys.argv[1].replace(':',''))))
+	__[socket].send(sys.stdin.buffer.read())
+	__[socket].close()

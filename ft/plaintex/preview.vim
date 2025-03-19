@@ -2,7 +2,7 @@ let g:tex_compiler        = 'luatex'
 let s:port_filename       = getpid().'.'.bufnr('%').'.'.'data.port'
 let s:port                = substitute(readfile(s:port_filename)[0], ":",     "",        "")
 let s:send_output_to_port = 'python ~/.vim/preview/ft/plaintex/plaintex.py /dev/stdin '.s:port
-"let s:send_output_to_port = 'nc -tc 127.0.0.1 '.s:port
+"let s:send_output_to_port = 'socketsend '.s:port
 
 let s:tex_cmd_compile = "sed '1i\\\\\\relax'|".g:tex_compiler." --interaction=scrollmode 1>/dev/null"
 let s:tex_cmd_pdf2svg = "pdf2svg texput.pdf /dev/stdout"

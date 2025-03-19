@@ -79,9 +79,10 @@ func getVimInfo() (vimPreviewRoot string, pid string, bufnr string) {
 func main() {
 
 	//vimPreviewRoot, vimPid, vimBufnr := getVimInfo()
-	vimPreviewRoot, vimPid, vimBufnr := os.Args[1] , os.Args[2] , os.Args[3]
+	path , fileNameID := os.Args[1] , os.Args[2]
 	dataPort := File{
-		name : vimPreviewRoot + "/" + vimPid + "." + vimBufnr + "." + "data.port",
+		//name : vimPreviewRoot + "/" + vimPid + "." + vimBufnr + "." + "data.port",
+		name : path + "/" + fileNameID + "." + "data.port",
 		echo : []byte("0"),
 		mode : 0644,
 	}
@@ -145,19 +146,21 @@ func main() {
 	addr := listener.Addr().String()
 
 	files := []File{
+		//{
+		//	name : vimPreviewRoot + "/" + "vim" + "." + "pid",
+		//	//echo : []byte(strconv.Itoa(os.Getpid())),
+		//	echo : []byte(vimPid),
+		//	mode : 0644,
+		//},
 		{
-			name : vimPreviewRoot + "/" + "vim" + "." + "pid",
-			//echo : []byte(strconv.Itoa(os.Getpid())),
-			echo : []byte(vimPid),
-			mode : 0644,
-		},
-		{
-			name : vimPreviewRoot + "/" + vimPid + "." + vimBufnr + "." + "websocket.port",
+			//name : vimPreviewRoot + "/" + vimPid + "." + vimBufnr + "." + "websocket.port",
+			name : path + "/" + fileNameID + "." + "websocket.port",
 			echo : []byte(addr[strings.LastIndex(addr, ":"):]),
 			mode : 0644,
 		},
 		{
-			name : vimPreviewRoot + "/" + vimPid + "." + vimBufnr + "." + "websocket.html",
+			//name : vimPreviewRoot + "/" + vimPid + "." + vimBufnr + "." + "websocket.html",
+			name : path + "/" + fileNameID + "." + "websocket.html",
 			echo : []byte(`
 				<html><head>
 				<script type="text/javascript">
