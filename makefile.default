@@ -9,6 +9,7 @@ websocket.go : go.mod
 go.mod :
 	stat go.mod || go mod init preview.nvim/websocket
 $(preview_root)/preview.vim : preview.vim
+	mkdir -p $(dir $@)
 	install -D -m 0644 $< -T $@
 ft :
 	make -C $@ -f makefile.default

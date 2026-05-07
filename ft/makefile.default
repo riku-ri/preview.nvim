@@ -3,14 +3,20 @@ preview_root := ~/.vim/preview
 all : $(preview_root)/ft/dot/preview.vim $(preview_root)/ft/c/preview.vim $(preview_root)/ft/r/preview.vim $(preview_root)/ft/plaintex/preview.vim $(preview_root)/ft/asciidoc/preview.vim
 
 $(preview_root)/ft/dot/preview.vim : dot/preview.vim
+	mkdir -p $(dir $@)
 	install -m 0644 -D $< $@
 $(preview_root)/ft/c/preview.vim   : c/preview.vim
+	mkdir -p $(dir $@)
 	install -m 0644 -D $< $@
 $(preview_root)/ft/r/preview.vim   : r/preview.vim
+	mkdir -p $(dir $@)
 	install -m 0644 -D $< $@
 $(preview_root)/ft/asciidoc/preview.vim : asciidoc/preview.vim
+	mkdir -p $(dir $@)
 	install -m 0644 -D $< $@
 $(preview_root)/ft/plaintex/preview.vim : plaintex/*
+	mkdir -p $(dir $@)
 	install -m 0644 -D $^ ${@D}
 $(preview_root)/ft/m4/preview.vim : m4/*
+	mkdir -p $(dir $@)
 	install -m 0644 -D $^ ${@D}
